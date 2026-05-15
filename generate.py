@@ -1394,19 +1394,25 @@ def main():
     print(f"  Found {len(entries)} entries")
 
     print("Generating detail pages…")
+    written = skipped = 0
     for i, e in enumerate(entries):
         key = e.get('ID', f'entry_{i}')
-        html = make_detail(e)
         out_path = os.path.join(DETAILS_DIR, f"{slug(key)}.html")
+        if os.path.exists(out_path):
+            skipped += 1
+            continue
         with open(out_path, 'w', encoding='utf-8') as f:
-            f.write(html)
+            f.write(make_detail(e))
+        written += 1
+
+    print(f"  {written} written, {skipped} skipped (already existed)")
 
     print("Generating index.html…")
     index_html = build_index(entries)
     with open("index.html", 'w', encoding='utf-8') as f:
         f.write(index_html)
 
-    print(f"Done. {len(entries)} detail pages + index.html generated.")
+    print(f"Done. {written + skipped} detail pages total + index.html generated.")
 
 
 if __name__ == '__main__':
