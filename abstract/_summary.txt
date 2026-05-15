@@ -1,0 +1,511 @@
+Abstract Fetch Summary
+============================================================
+BibTeX entries       : 492
+Already existed      : 247
+Newly fetched        : 198
+  via arXiv HTML     : 0
+  via Semantic Scholar: 0
+  via OpenAlex       : 198
+  via Google Scholar : 0
+Not found            : 47
+
+FETCHED
+------------------------------------------------------------
+  Ma2026Atlas                                   [openalex]
+  Luo2026CVPR                                   [openalex]
+  Zhu2026CVPR                                   [openalex]
+  Xu2026CVPR                                    [openalex]
+  SShen2026CVPR                                 [openalex]
+  Liu2026CVPR                                   [openalex]
+  He2026CVPR                                    [openalex]
+  Wang2026ICLRb                                 [openalex]
+  Zhou2026ICLR                                  [openalex]
+  Wang2026ICLR                                  [openalex]
+  Zhao2026ICLR                                  [openalex]
+  OmniR12025NeurIPS                             [openalex]
+  Ge2025TPAMI                                   [openalex]
+  SurfaceSplat2025                              [openalex]
+  Siggraph2025GVM                               [openalex]
+  Zhu2025TPAMIPonderV2                          [openalex]
+  WeijiawuCVPR2025                              [openalex]
+  Zhu2025CVPR                                   [openalex]
+  Yang2025ICLR                                  [openalex]
+  Jiao2025ICLR                                  [openalex]
+  Bo2025ICLR                                    [openalex]
+  Zhao2025ICLR                                  [openalex]
+  Xu2025ICLR                                    [openalex]
+  Wuwj2025IJCV                                  [openalex]
+  AutoStory2024Wang                             [openalex]
+  FreeCompose2024ECCV                           [openalex]
+  VisionLLAMA2024ECCV                           [openalex]
+  Wu2022transdetr                               [openalex]
+  Yin2024SIW                                    [openalex]
+  Li2024TIP                                     [openalex]
+  Chen2024ICML                                  [openalex]
+  Chi2024ACL                                    [openalex]
+  LoRAPrune2024ACL                              [openalex]
+  Liu2024ICML                                   [openalex]
+  Zhu2024ICML                                   [openalex]
+  JiangCVPR2024                                 [openalex]
+  FanCVPR2024                                   [openalex]
+  DingCVPR2024                                  [openalex]
+  Wang2024AAAI                                  [openalex]
+  Jing2024AAAI                                  [openalex]
+  Pang2023KDD                                   [openalex]
+  XuG2023ICCV                                   [openalex]
+  ZhangC2023ICCV                                [openalex]
+  Zhu2023ICCV                                   [openalex]
+  XiY2023IJCV                                   [openalex]
+  WangW2023ICCV                                 [openalex]
+  CVPR2023B                                     [openalex]
+  FoPro2023AAAI                                 [openalex]
+  PointTeaching2023AAAI                         [openalex]
+  TianSCH22                                     [openalex]
+  Jia2022AdvA                                   [openalex]
+  Zhang2022ViTb                                 [openalex]
+  Lin2022TVRc                                   [openalex]
+  Tian2022FCOSLidar                             [openalex]
+  Chi2022Depth                                  [openalex]
+  Liang2022Action                               [openalex]
+  Gao2022CLIP                                   [openalex]
+  Zhang2022DENSE                                [openalex]
+  Wang2022CGF                                   [openalex]
+  Wang2022VI                                    [openalex]
+  Gao2022DisCO                                  [openalex]
+  Topformer2022                                 [openalex]
+  Ding2022Catching                              [openalex]
+  Li2022Rigid                                   [openalex]
+  TSGB2022TIP                                   [openalex]
+  Sun2022TRO                                    [openalex]
+  Autorectify2021Bian                           [openalex]
+  Cui2021Joint                                  [openalex]
+  Xie2021Intra                                  [openalex]
+  Wang2021IJCV_NAS                              [openalex]
+  Yan2021ICCVOccl                               [openalex]
+  Yan2021ICCVBVPerson                           [openalex]
+  YXie2021MICCAI                                [openalex]
+  Mao2021CVPR4                                  [openalex]
+  Liu2021CVPR5                                  [openalex]
+  Ruan2021CVPR9                                 [openalex]
+  Shu2021CVPR10                                 [openalex]
+  Li2021CVPR12                                  [openalex]
+  ZhangPerson2021AAAI                           [openalex]
+  LiuBNN2021AAAI                                [openalex]
+  Tian2021Adversarial                           [openalex]
+  Daiyt2020                                     [openalex]
+  Xie2020TMIb                                   [openalex]
+  LiuL2020CSVT                                  [openalex]
+  Wang2020Soft                                  [openalex]
+  Wang2020AET                                   [openalex]
+  He2020PC1                                     [openalex]
+  He2020InstanceAware                           [openalex]
+  YXie2020MICCAI                                [openalex]
+  Zhang2020Zeroshot                             [openalex]
+  Dong2020segmentation                          [openalex]
+  Li2020Carlicense                              [openalex]
+  MM2021B                                       [openalex]
+  Zhou2020TPAMIZhou                             [openalex]
+  Yan2020TMM                                    [openalex]
+  Peng2020TNNLS                                 [openalex]
+  TasselNet2020                                 [openalex]
+  Wei2019TKDE                                   [openalex]
+  Zhang2020TNNLS                                [openalex]
+  TextDet2019Wang                               [openalex]
+  MM2019Yan                                     [openalex]
+  Wangxy2019CSVT                                [openalex]
+  IJCAI19Zhang                                  [openalex]
+  KDD19Pang                                     [openalex]
+  Counting2019CSVT                              [openalex]
+  CVPR19Zhang6                                  [openalex]
+  Zhang2019Salient                              [openalex]
+  Wang2019PR                                    [openalex]
+  Zhang2019Attn                                 [openalex]
+  Fayao2019PAMI                                 [openalex]
+  Liu2019CSVT                                   [openalex]
+  Zhao2019Structural                            [openalex]
+  ICRA19Nekrasov                                [openalex]
+  ACCV18Wei                                     [openalex]
+  BMVC18Nekrasov                                [openalex]
+  BMVC18Cai                                     [openalex]
+  Yao2018TCSVT                                  [openalex]
+  Zhang2018TCSVT                                [openalex]
+  Li2018T-ITSa                                  [openalex]
+  HLiu2018TPAMI                                 [openalex]
+  Lu2018TIP                                     [openalex]
+  TongShen2018CVPR                              [openalex]
+  Xian2018CVPR                                  [openalex]
+  You2018T-ITS                                  [openalex]
+  AAAI2018Zhang                                 [openalex]
+  AAAI2018Zhuang                                [openalex]
+  ACRA2017McMahon                               [openalex]
+  ICCV2017Haolu                                 [openalex]
+  BMVC17Zeroshot                                [openalex]
+  Li2017Removal                                 [openalex]
+  SWP2017Hu                                     [openalex]
+  CVPR2017WangAttend                            [openalex]
+  Part2016Yao                                   [openalex]
+  ICCV15Zhang                                   [openalex]
+  Hu2015T-ITS                                   [openalex]
+  CVPR15workshop                                [openalex]
+  Zhao2015TNN                                   [openalex]
+  CVPR15c                                       [openalex]
+  CVPR15g                                       [openalex]
+  CVPR15h                                       [openalex]
+  Wang2014PAMI                                  [openalex]
+  ICIP13aShen                                   [openalex]
+  ICIP13bShen                                   [openalex]
+  ICIP13cShen                                   [openalex]
+  CVPR13bLi                                     [openalex]
+  CVPR13cWang                                   [openalex]
+  CVPR13eYao                                    [openalex]
+  Xi2013TIP                                     [openalex]
+  LMS2013TIP                                    [openalex]
+  TMM2013Shape                                  [openalex]
+  ECCV12                                        [openalex]
+  CVPR12b                                       [openalex]
+  UBoost2011Shen                                [openalex]
+  DICTA2011b                                    [openalex]
+  DICTA2011a                                    [openalex]
+  AsymBoost2011Wang                             [openalex]
+  ICCV2011                                      [openalex]
+  AAAI2011                                      [openalex]
+  Shen2011CVPRa                                 [openalex]
+  Liu2011CVPR                                   [openalex]
+  Shi2011CVPR                                   [openalex]
+  Li2011CVPR                                    [openalex]
+  Shen2011CVPRb                                 [openalex]
+  Shi2010CVPR                                   [openalex]
+  Shen2008PSD                                   [openalex]
+  Kernel2007Quang                               [openalex]
+  Wang2010ACCV                                  [openalex]
+  Hao2010ACCV                                   [openalex]
+  Paul2010ACCV                                  [openalex]
+  Face2010Li                                    [openalex]
+  Human2010                                     [openalex]
+  Multiexit2010Wang                             [openalex]
+  Zhou2010FS                                    [openalex]
+  Dai2009DICTA                                  [openalex]
+  Wang2009DICTA                                 [openalex]
+  Lu2008Human                                   [openalex]
+  Junae2008SVM                                  [openalex]
+  Li2008Boosting                                [openalex]
+  Shen2008Self                                  [openalex]
+  Performance2008Paul                           [openalex]
+  Realtime2008Paisitkriangkrai                  [openalex]
+  Human2008Paul                                 [openalex]
+  Face2008Shen                                  [openalex]
+  Color2007Li                                   [openalex]
+  Experimental2007Paul                          [openalex]
+  Feature2007Shen                               [openalex]
+  Adaptive2007Wang                              [openalex]
+  Fast2007Shen                                  [openalex]
+  Classification2006Shen                        [openalex]
+  LMI2006Li                                     [openalex]
+  Enhanced2006Nguyen                            [openalex]
+  Shen2005Adaptive                              [openalex]
+  Shen2005Visual                                [openalex]
+  Shen2005Augmented                             [openalex]
+  Lin2004Active                                 [openalex]
+  Shen2004Articulated                           [openalex]
+  Lu2003Lattice                                 [openalex]
+  Shen2003Probabilistic                         [openalex]
+
+MISSING / NOT FOUND
+------------------------------------------------------------
+  Ding2026ICML                                  (not found in any source)
+  Zhong2026CVPR                                 (not found in any source)
+  Deng2026ICLR                                  (not found in any source)
+  Zizun2026ICLR                                 (not found in any source)
+  Jing2026IJCV                                  (not found in any source)
+  Ding2025IJCV                                  (not found in any source)
+  DICEPTION2025NeurIPS                          (not found in any source)
+  Wang2025TPAMI                                 (not found in any source)
+  YLiu2025IJCV                                  (not found in any source)
+  Yang2025ICCV                                  (not found in any source)
+  Chan2025ICCV                                  (not found in any source)
+  Liu2025ICML                                   (not found in any source)
+  Chen2025ICLR                                  (not found in any source)
+  WangFramer2025ICLR                            (not found in any source)
+  Liuyang2024Masked                             (not found in any source)
+  Depth2024Xian                                 (not found in any source)
+  Sai2023NPJ                                    (not found in any source)
+  YAN2023IJCVSPL                                (not found in any source)
+  Cai2022PR                                     (not found in any source)
+  Yan2021Ghostfree                              (not found in any source)
+  Zhao2021PRLearning                            (not found in any source)
+  Zhao2021PR1                                   (not found in any source)
+  ShengZhang2020TMM                             (not found in any source)
+  MICCAI2019Xie                                 (not found in any source)
+  Zhang2019PR                                   (not found in any source)
+  Zhang2019Lightweight                          (not found in any source)
+  Zhang2019Accurate                             (not found in any source)
+  Zhang2018IJCV                                 (not found in any source)
+  Wei2017PR                                     (not found in any source)
+  Zhang2016TGSE                                 (not found in any source)
+  ECCV16hyperspectral                           (not found in any source)
+  Canonical2016Wang                             (not found in any source)
+  MKL2014                                       (not found in any source)
+  Shen2013NN                                    (not found in any source)
+  DICTA2010                                     (not found in any source)
+  SDP2012                                       (not found in any source)
+  Fast2008Wang                                  (not found in any source)
+  Shen2005Fast                                  (not found in any source)
+  Zhou2010MICCAI                                (not found in any source)
+  Zheng2010ACCV                                 (not found in any source)
+  Wang2009ACCV                                  (not found in any source)
+  Kim2009ACCV                                   (not found in any source)
+  Li2010Interactive                             (not found in any source)
+  SDP2008Shen                                   (not found in any source)
+  Convex2007Shen                                (not found in any source)
+  Object2007Li                                  (not found in any source)
+  Shen2004Enhanced                              (not found in any source)
+
+SKIPPED (already existed)
+------------------------------------------------------------
+  Zhu2026ICMLActiveO3
+  Wang2026AAAI
+  Aether2025
+  Zhang2025ICCV
+  Zhu2025ICCV
+  Yan2025TGLLaVA
+  Liu2025VIMTS
+  YangLiu2024Simple
+  Muzhi2024Unleashing
+  hu2024metric3dv2
+  Mao2024ICLR
+  Liu2024ICLR
+  Yang2024ICLR
+  Ruibo2024TPAMI
+  Sun2023TPAMI
+  SPTSv2
+  Lin2023IJCVSuper
+  Weijia2023DDM
+  CPE2023ICLR
+  Liu2023TPAMI
+  Lu2023IJCVCounting
+  Xie2023DodNet
+  YZhao2023ICCV
+  Yinwei2023ICCV
+  Zhang2023SegVITv2
+  KYQZ2023ICCV
+  SegGPT2023ICCV
+  DiffuMask2023ICCV
+  CVPR2023aWang
+  Tong2022TPAMI
+  Chi2022TPAMI
+  Weiyin2022TPAMI
+  Peixian2022Detection
+  Tong2022Detection
+  Poseur2022Detection
+  Zhuang2022IJCV
+  Peng2022MM
+  Wang2022Solo
+  Long2022RAC
+  Dai2022Matting
+  CondInst2022Tian
+  Haokui2021NAS
+  Twins2021Chu
+  DNRD2021Zhang
+  WXL2021SOLO
+  Liu2021ABCNetv2
+  Yu2021BiSegV2
+  Chen2021ICCV
+  Yuan2021ICCVSimple
+  Shu2021ICCVKD
+  Chizhang2021ICCVMeta
+  Yin2021PAMIvn
+  Li2021Text
+  Pang2021KDD
+  Kong2021ICRA
+  Wang2021PANplus
+  Zhuang2021Quantization
+  Bian2021IJCV
+  Zhang2021CVPR1
+  Tian2021CVPR2
+  Chen2021CVPR3
+  Yin2021CVPR6
+  He2021CVPR7
+  Dai2021CVPR8
+  Wang2021CVPR11
+  Wang2021CVPR13
+  Guo2021CVPR14
+  IJCV2021Liuyl
+  SoloV22020
+  Zhang2020Covid
+  Luo2020IJCV
+  Pan2020ACMSurvey
+  Zhangx2020T-ITS
+  Cao2020GAN
+  Wang2020SuperRes
+  Xie2020Segtransp
+  Tian2020CondInst
+  Wang2020SOLO
+  Yu2020RepGraphNet
+  Liu2020WeightingRL
+  Liu2020EfficientSemantic
+  Lu2020PAMIIndexNet
+  Liu2020PAMI
+  Liu2020TOG
+  Wang2020IJCAI
+  CVPR2020REVERIE1
+  CVPR2020Yu2
+  CVPR2020Zhang3
+  CVPR2020Wang4
+  CVPR2020Zhuang5
+  CVPR2020Liu6
+  CVPR2020BlendMask7
+  CVPR2020Xie8
+  CVPR2020EMD9
+  CVPR2020NASFCOS10
+  CVPR2020NAS11
+  CVPR2020Self12
+  MM2021A
+  Zhang2020OrderlessReID
+  Xie2020TMIa
+  Gong2020TNNLS
+  MobileFAN2020
+  AAAI20Teney
+  AAAI20Wang
+  Scale2019Bian
+  Cao2019GAN
+  Matting2019Lu
+  PersonReID2019Zhang
+  VNL2019Yin
+  Temporal2019Zhang
+  FCOS2019Tian
+  OpenSet2019Xiong
+  Adaptive2019Zhang
+  TZhang2019TMM
+  Wei2019TIP
+  CVPR19PengWang0
+  CVPR19Nekrasov1
+  CVPR19HuiLi2
+  CVPR19Zhuang3
+  CVPR19Wang4
+  CVPR19Zhang5
+  CVPR19Tian7
+  CVPR19He8
+  CVPR19Yan9
+  Wu2019PR
+  Chen2019PAMI
+  AAAI19Li
+  ICASSP2018Dong
+  Wei2018PR
+  ACCV18Li
+  Zhang2018ECCV
+  Deng2018ECCV
+  Zhang2018IJCAI
+  Cao2018ICML
+  Zhuang2018PR
+  Song2018CVPR
+  He2018CVPR
+  QWu2018CVPR
+  Zhuang2018CVPR_a
+  Zhuang2018CVPR_b
+  Ma2018CVPR_a
+  Wang2018CVPR
+  Chen2018CVPR
+  Li2018IVC
+  Zhang2018TMM
+  Guo2018TMM
+  Wang2017FVQA
+  Lu2017Counting
+  Cao2017
+  ICRA2017Chen
+  ICCV2017Zhuang
+  ICCV2017Chen
+  ICCV2017WeiLiu
+  ICCV2017HuiLi
+  BMVC2017Tong
+  IJCAI2017Tong
+  IJCAI2017Wei
+  IJCAI2017Wang
+  Lin2017Semantic
+  Wu2017External
+  CVPR2017WangVQA
+  CVPR2017Lin
+  CVPR2017YaoLi
+  CVPR2017Gong
+  CVPR2017Zhuang
+  TNNLS2017Liu
+  TIP2017Liu
+  IJCV2017Lin
+  PR2017Qiao
+  TCSVT2017Hu
+  Wu2017PR
+  TCSVT2017Sheng
+  TPAMI2017Liu
+  Cross2017Liu
+  TIP2016Cao
+  CVIU2016
+  CVIU2017VQA
+  Yao2016IJCV
+  NeurIPS2016
+  ECCV16Li
+  Liu2016Tracking
+  CVPR16AMA
+  CVPR16What
+  CVPR16Irregular
+  CVPR16labelling
+  CVPR16Binary
+  CVPR16Zeroshot
+  Pooling2016Wang
+  Face2016Li
+  PRFace2016Shen
+  BQP2015Wang
+  Depth2015Liu
+  BnB2015Wang
+  NeurIPS15Lin
+  Xi2015TPAMI
+  Paisitkriangkrai2015TPAMI
+  Zhang2015IJCV
+  Liu2015CRFPR
+  Liu2015TPAMI
+  Harandi2015IJCV
+  CVPR15a
+  CVPR15b
+  CVPR15d
+  CVPR15e
+  CVPR15f
+  FastHash2015Lin
+  Hashing2015Shen
+  SDP2015Li
+  Liu2014Fisher
+  Paul2014TIPb
+  ECCV14Lin
+  ECCV14Paul
+  Yan2014TIPa
+  CVPR14Lin
+  Shen2014Outlier
+  Shen2014SBoosting
+  Liu2014MKL
+  Li2014TIP
+  ICCV13Lin
+  ICCV13Pai
+  ICCV13Li
+  ICCV2013Harandi
+  Shen2014Metric
+  Paul2013Fastboosting
+  Paul2013TMM
+  Li2013Hyper
+  Paisitkriangkrai2013RandomBoost
+  CVPR13aShen
+  CVPR13dWang
+  Xi2013Survey
+  ICML13a
+  FisherBoost2013IJCV
+  TIP2014Shortcut
+  TPAMI2013Xi
+  ACCV12
+  ICML12
+  CVPR12a
+  JMLR2012Shen
+  GSLDA2010Shen
+  Incremental2010Shen
+  Scalable2010Shen
+  Shen2010ECCV
+  Shen2009PSD
+  Paisitkriangkrai2009CVPR
+  MDBoost2010Shen
+  Dual2010Shen
+  Generalized2010Shen

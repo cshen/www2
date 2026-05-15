@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piecewise Classifier Mappings: Learning Fine-Grained Learner… — Chunhua Shen</title>
+  <meta name="description" content="Humans are capable of learning a new fine-grained concept with very little supervision, \emph{e.g.}, few exemplary images for a species of bird, yet our best de">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+  <style>
+
+:root {
+  --bg:           #F9F7F3;
+  --bg-card:      #FFFFFF;
+  --ink:          #0D0D0D;
+  --ink-mid:      #38352F;
+  --ink-light:    #7A756D;
+  --rule:         #DDD9D0;
+  --rule-strong:  #C4BFB5;
+  --accent:       #9E1515;
+  --accent-hover: #BF2020;
+  --accent-pale:  rgba(158,21,21,0.07);
+  --disp:         'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+  --ui:           'Barlow Condensed', 'Arial Narrow', Helvetica, sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg:           #141210;
+  --bg-card:      #1C1A17;
+  --ink:          #EDE9E1;
+  --ink-mid:      #C4BFAF;
+  --ink-light:    #A89F94;
+  --rule:         #2E2B26;
+  --rule-strong:  #3D3830;
+  --accent:       #D94840;
+  --accent-hover: #E85E55;
+  --accent-pale:  rgba(217,72,64,0.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--disp);
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--accent); }
+
+/* Thin accent stripe at very top — classic magazine detail */
+body::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: var(--ink);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+}
+
+.page-wrap { max-width: 1200px; margin: 0 auto; }
+.container  { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+/* ════════════════════════════════════════
+   SITE HEADER
+   ════════════════════════════════════════ */
+.site-header {
+  position: sticky;
+  top: 3px;           /* below the accent stripe */
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--ink);
+}
+.site-header .inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 14px 48px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.site-logo {
+  font-family: var(--disp);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.site-logo:hover { color: var(--accent); }
+
+/* ── Theme toggle ── */
+.theme-toggle {
+  margin-left: 16px;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  border-radius: 100px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ink-mid);
+  transition: border-color .14s, color .14s, background .14s;
+}
+.theme-toggle:hover { border-color: var(--ink); color: var(--ink); background: var(--rule); }
+.theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* show correct icon per theme */
+.icon-moon { display: block; }
+.icon-sun  { display: none; }
+[data-theme="dark"] .icon-moon { display: none; }
+[data-theme="dark"] .icon-sun  { display: block; }
+
+.search-wrap { flex: 1; max-width: 360px; margin-left: auto; }
+.search-box {
+  width: 100%;
+  padding: 7px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule-strong);
+  font-family: var(--disp);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s;
+}
+.search-box::placeholder { color: var(--ink-light); font-style: italic; }
+.search-box:focus { border-bottom-color: var(--ink); }
+
+/* ════════════════════════════════════════
+   PAGE HEADER  (masthead)
+   ════════════════════════════════════════ */
+.page-header {
+  padding: 64px 0 36px;
+  border-bottom: 2px solid var(--ink);
+}
+.page-header-rule {
+  height: 1px;
+  background: var(--rule-strong);
+  margin-bottom: 32px;
+}
+.page-header h1 {
+  font-family: var(--disp);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+.page-header p {
+  margin-top: 18px;
+  font-family: var(--disp);
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: var(--ink-light);
+}
+
+/* ════════════════════════════════════════
+   VENUE FILTERS  (Rule 11)
+   ════════════════════════════════════════ */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 0 20px;
+  border-bottom: 1px solid var(--rule);
+}
+.filter-btn {
+  padding: 4px 13px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 100px;
+  background: transparent;
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: all .14s;
+  position: relative;
+}
+.filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+.filter-btn.active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.filter-btn.secondary-venue         { display: none; }
+.filter-btn.secondary-venue.revealed { display: inline-flex; }
+
+/* ── Custom tooltip ── */
+.filter-btn[data-tooltip]::before,
+.filter-btn[data-tooltip]::after {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.filter-btn[data-tooltip]::after {
+  content: attr(data-tooltip);
+  white-space: nowrap;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--disp);
+  font-size: 14px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12);
+  z-index: 10000;
+}
+.filter-btn[data-tooltip]::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid var(--ink);
+  bottom: calc(100% + 6px);
+  z-index: 10001;
+}
+.filter-btn[data-tooltip]:hover::before,
+.filter-btn[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+/* accent stripe on tooltip */
+.filter-btn[data-tooltip]::after {
+  border-top: 3px solid var(--accent);
+}
+
+.show-more-venues {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 4px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.show-more-venues:hover { color: var(--accent-hover); }
+
+/* ════════════════════════════════════════
+   LAYOUT
+   ════════════════════════════════════════ */
+.layout {
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+  padding-top: 0;
+}
+
+/* Year sidebar */
+.year-nav { width: 76px; flex-shrink: 0; padding-top: 48px; }
+.year-nav-inner { position: sticky; top: 72px; }
+.year-nav a {
+  display: block;
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 4px 0;
+  color: var(--ink-light);
+  text-transform: uppercase;
+  transition: color .14s;
+}
+.year-nav a:hover,
+.year-nav a.active { color: var(--accent); font-weight: 700; }
+
+/* ════════════════════════════════════════
+   PUBLICATION LIST
+   ════════════════════════════════════════ */
+.pub-list { flex: 1; min-width: 0; }
+
+.year-group { margin-bottom: 0; }
+
+/* Large editorial chapter number */
+.year-heading {
+  font-family: var(--disp);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 40px 0 10px;
+  border-bottom: 1px solid var(--rule-strong);
+  margin-bottom: 0;
+}
+
+.pub-entry {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  animation: entryFadeIn 0.44s ease both;
+}
+.pub-entry:hover {
+  background: var(--bg-card);
+}
+
+@keyframes entryFadeIn {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pub-main { flex: 1; min-width: 0; }
+
+.pub-title {
+  font-family: var(--disp);
+  font-size: 19.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 7px;
+  color: var(--ink);
+}
+.pub-title a { color: var(--ink); }
+.pub-title a:hover { color: var(--accent); }
+
+.pub-authors {
+  font-family: var(--disp);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  margin-bottom: 4px;
+  line-height: 1.65;
+}
+.cs-author { text-decoration: underline; color: var(--ink-mid); }
+
+.pub-venue {
+  font-family: var(--disp);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-light);
+}
+
+.pub-note {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--disp);
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 2px 12px;
+  border-radius: 4px;
+}
+
+/* ── Preview button & popup ── */
+/* z-index escalation handled in JS when popup opens */
+.pub-preview-wrap { position: relative; flex-shrink: 0; }
+.pub-entry { isolation: auto; }
+.pub-entry.popup-open { isolation: isolate; z-index: 9999; position: relative; }
+
+.btn-preview {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 22px;
+  background: transparent;
+  color: var(--ink-mid);
+  border: 1px solid var(--rule-strong);
+  border-radius: 100px;
+  font-family: var(--disp);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .14s, color .14s, border-color .14s;
+}
+.btn-preview:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.preview-popup {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 12px);
+  width: 440px;
+  background: var(--bg-card);
+  opacity: 1;
+  border-top: 3px solid var(--accent);
+  box-shadow: 0 16px 60px rgba(13,13,13,0.22), 0 2px 8px rgba(13,13,13,0.10);
+  padding: 28px 32px 28px;
+  z-index: 9999;
+  animation: popupReveal .15s ease;
+}
+.preview-popup.visible { display: block; }
+
+@keyframes popupReveal {
+  from { opacity: 0; transform: translateY(-7px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.preview-abstract {
+  font-family: var(--disp);
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: var(--ink-mid);
+  max-height: 280px;
+  overflow-y: auto;
+  margin-bottom: 22px;
+  padding-right: 4px;
+}
+.preview-abstract::-webkit-scrollbar { width: 3px; }
+.preview-abstract::-webkit-scrollbar-thumb { background: var(--rule-strong); }
+
+.btn-view-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 22px;
+  background: transparent;
+  color: var(--ink-mid);
+  border: 1px solid var(--rule-strong);
+  border-radius: 100px;
+  font-family: var(--disp);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .14s, color .14s, border-color .14s;
+}
+.btn-view-details:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+#no-results {
+  display: none;
+  padding: 64px 0;
+  text-align: center;
+  color: var(--ink-light);
+  font-style: italic;
+  font-size: 19px;
+}
+
+/* ════════════════════════════════════════
+   DETAIL PAGE
+   ════════════════════════════════════════ */
+.breadcrumb {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  padding: 36px 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.breadcrumb a { color: var(--ink-light); text-decoration: underline; text-underline-offset: 3px; }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb-sep { color: var(--rule-strong); }
+
+.detail-title {
+  font-family: var(--disp);
+  font-size: clamp(30px, 4.5vw, 58px);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 36px;
+}
+.detail-authors {
+  font-family: var(--ui);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  line-height: 1.7;
+}
+.cs-author-detail { text-decoration: underline; color: var(--ink-mid); }
+
+.detail-venue {
+  font-family: var(--disp);
+  font-size: 17px;
+  font-style: italic;
+  color: var(--ink-light);
+}
+
+.detail-note {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+/* ── Action buttons ── */
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 60px;
+  padding-bottom: 44px;
+  border-bottom: 1px solid var(--rule);
+}
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+  border-radius: 100px;
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .14s;
+  line-height: 1;
+}
+.action-btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+  text-decoration: none;
+}
+.action-btn svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+
+/* ── Abstract / BibTeX sections ── */
+.section { margin-bottom: 64px; }
+
+.section-grid {
+  display: grid;
+  grid-template-columns: 148px 1fr;
+  gap: 44px;
+  align-items: start;
+}
+.section-label {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  padding-top: 6px;
+  border-top: 1px solid var(--rule-strong);
+}
+.section-content {
+  font-family: var(--disp);
+  font-size: 18px;
+  line-height: 1.76;
+  color: var(--ink-mid);
+}
+
+/* BibTeX code block */
+.bibtex-block {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink);
+  padding: 20px 26px;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+  color: var(--ink-mid);
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 2px solid var(--ink);
+  padding: 28px 0;
+  margin-top: 96px;
+}
+.site-footer p {
+  font-family: var(--ui);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  text-align: center;
+}
+.site-footer a { color: var(--ink-light); text-decoration: underline; }
+.site-footer a:hover { color: var(--accent); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .container  { padding: 0 20px; }
+  .site-header .inner { padding: 14px 20px; }
+  .layout { flex-direction: column; }
+  .year-nav { width: 100%; padding-top: 20px; }
+  .year-nav-inner { position: static; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .section-grid { grid-template-columns: 1fr; gap: 12px; }
+  .preview-popup { width: 310px; right: auto; left: 0; }
+  .page-header h1 { font-size: 32px; }
+  .detail-title { font-size: 30px; }
+}
+
+  </style>
+  <script>(function() {
+  var saved = localStorage.getItem('theme');
+  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
+</head>
+<body>
+<div class="page-wrap">
+
+<header class="site-header">
+  <div class="inner">
+    <a href="../index.html" class="site-logo">Chunhua Shen</a>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
+    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+    <svg class="icon-sun"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+  </div>
+</header>
+
+<main class="container">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="../index.html">Publications</a>
+    <span class="breadcrumb-sep">›</span>
+    <span aria-current="page">Piecewise Classifier Mappings: Learning Fine-Grained Learner…</span>
+  </nav>
+
+  <h1 class="detail-title">Piecewise Classifier Mappings: Learning Fine-Grained Learners for Novel Categories With Few Examples</h1>
+
+  <div class="detail-meta">
+    <div class="detail-authors">Xiu-Shen Wei · Peng Wang · Lingqiao Liu · <span class="cs-author-detail">Chunhua Shen</span> · Jianxin Wu</div>
+    <div class="detail-venue">IEEE Transactions on Image Processing (2019)</div>
+    
+  </div>
+
+  <div class="action-buttons" role="group" aria-label="Publication actions">
+    <button class="action-btn" id="copy-bibtex-btn" onclick="copyBibtex(this)" title="Copy BibTeX to clipboard">
+      <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+      Copy BibTeX</button>
+    <a href="https://arxiv.org/abs/1805.04288" class="action-btn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>arXiv</a>
+    <a href="https://scholar.google.com/scholar?q=Piecewise+Classifier+Mappings:+Learning+Fine-Grained+Learners+for+Novel+Categories+With+Few+Examples" class="action-btn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18V17l7 4 7-4v-5.82L23 9 12 3zm6 12.82L12 19l-6-3.18V12.5l6 3.5 6-3.5v3.32z"/></svg>Google Scholar</a>
+    <a href="https://twitter.com/intent/tweet?text=Piecewise Classifier Mappings: Learning Fine-Grained Learners for Novel Categories With Few Examples&url=https://cshen.github.io/details/Wei2019TIP.html" class="action-btn" target="_blank" rel="noopener" title="Share on X / Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://cshen.github.io/details/Wei2019TIP.html" class="action-btn" target="_blank" rel="noopener" title="Share on LinkedIn"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a>
+    <a href="https://github.com/cshen/cshen.github.io/issues/new?title=Issue: Piecewise Classifier Mappings: Learning Fine-Grained Learner&body=BibTeX key: Wei2019TIP
+
+Issue description:
+" class="action-btn" target="_blank" rel="noopener" title="Report an issue"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></a>
+  </div>
+
+  <section class="section" aria-labelledby="abstract-lbl">
+    <div class="section-grid">
+      <h2 class="section-label" id="abstract-lbl">Abstract</h2>
+      <div class="section-content">Humans are capable of learning a new fine-grained concept with very little supervision, \emph{e.g.}, few exemplary images for a species of bird, yet our best deep learning systems need hundreds or thousands of labeled examples. In this paper, we try to reduce this gap by studying the fine-grained image recognition problem in a challenging few-shot learning setting, termed few-shot fine-grained recognition (FSFG). The task of FSFG requires the learning systems to build classifiers for novel fine-grained categories from few examples (only one or less than five). To solve this problem, we propose an end-to-end trainable deep network which is inspired by the state-of-the-art fine-grained recognition model and is tailored for the FSFG task. Specifically, our network consists of a bilinear feature learning module and a classifier mapping module: while the former encodes the discriminative information of an exemplar image into a feature vector, the latter maps the intermediate feature into the decision boundary of the novel category. The key novelty of our model is a &quot;piecewise mappings&quot; function in the classifier mapping module, which generates the decision boundary via learning a set of more attainable sub-classifiers in a more parameter-economic way. We learn the exemplar-to-classifier mapping based on an auxiliary dataset in a meta-learning fashion, which is expected to be able to generalize to novel categories. By conducting comprehensive experiments on three fine-grained datasets, we demonstrate that the proposed method achieves superior performance over the competing baselines.</div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="bibtex-lbl">
+    <div class="section-grid">
+      <h2 class="section-label" id="bibtex-lbl">BibTeX</h2>
+      <div>
+        <div class="bibtex-block" id="bibtex-content" role="region" aria-label="BibTeX citation">@article{Wei2019TIP,
+  title   = {Piecewise classifier mappings: Learning fine-grained learners for novel categories with few examples},
+  author  = {Xiu-Shen Wei and Peng Wang and Lingqiao Liu and Chunhua Shen and Jianxin Wu},
+  journal = {IEEE Transactions on Image Processing},
+  year    = {2019},
+}</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+</div><!-- .page-wrap -->
+
+<footer class="site-footer">
+  <p>© Chunhua Shen &nbsp;·&nbsp; <a href="../index.html">Publications</a></p>
+</footer>
+
+<script>
+function copyBibtex(btn) {
+  var text = document.getElementById('bibtex-content').textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    var orig = btn.innerHTML;
+    btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Copied!';
+    setTimeout(function() { btn.innerHTML = orig; }, 2000);
+  });
+}
+document.getElementById('theme-toggle').addEventListener('click', function() {
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+});
+
+</script>
+</body>
+</html>

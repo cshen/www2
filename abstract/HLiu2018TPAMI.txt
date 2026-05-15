@@ -1,0 +1,1 @@
+) ( L << n). Finally, to make the optimization tractable, we further relax the discrete constrains and design a customized stochastic gradient decent algorithm on the Stiefel manifold. Experimental results on serval large-scale benchmarks demonstrate that the proposed OCH method can achieve superior performance over the state-of-the-art approaches.
