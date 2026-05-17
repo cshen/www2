@@ -175,6 +175,13 @@ def _clean_title(raw: str) -> str:
             out.append(p)
     return ''.join(out).strip()
 
+def _prep_title(raw: str) -> str:
+    """Normalise whitespace and collapse single-letter brace groups (e.g. {B}ezier → Bezier)
+    BEFORE apply_title_case runs, so title casing works on whole words."""
+    raw = re.sub(r'\s+', ' ', raw).strip()           # flatten multi-line BibTeX titles
+    raw = re.sub(r'\{([A-Za-z])\}', r'\1', raw)      # {B}ezier → Bezier
+    return raw
+
 # ---------------------------------------------------------------------------
 # Author abbreviation  "Firstname Last" → "F. Last"
 # ---------------------------------------------------------------------------
@@ -340,7 +347,7 @@ def _make_frames(frame_h: float) -> list:
 
 def _entry_para(e: dict, n: int) -> Paragraph:
     """Return a single hanging-indent Paragraph:  N.  Authors (Year), "Title", Venue."""
-    title_raw  = apply_title_case((e.get('title') or 'Untitled').strip())
+    title_raw  = apply_title_case(_prep_title(e.get('title') or 'Untitled'))
     title      = _esc(_clean_title(title_raw))
     authors    = fmt_authors_pdf(e.get('author') or '')
     year_str   = _esc((e.get('year') or '').strip())
