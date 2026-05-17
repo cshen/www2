@@ -241,7 +241,7 @@ _ABBREV_MAP = [
     (re.compile(r'\bTransactions on\b',   re.I), 'Trans.'),
     (re.compile(r'\bConference on\b',     re.I), 'Conf.'),
     (re.compile(r'\bJournal of\b',        re.I), 'J.'),
-    (re.compile(r'\bInternational\b',     re.I), "Int'l"),
+    (re.compile(r'\bInternational\b',     re.I), "Int."),
     (re.compile(r'\b and \b',             re.I), ' & '),
 ]
 
@@ -253,7 +253,9 @@ def _shorten_venue(s: str) -> str:
 # ---------------------------------------------------------------------------
 # Entry type: for within-year sorting (conf → journal → book)
 # ---------------------------------------------------------------------------
-
+# Note: relies on the bib file having consistent ENTRYTYPE values for conf vs. journal vs. book.
+# CS: There was a typo in one ENTRYTYPE ("inproceedgins") that caused that entry to be treated as a book and sorted last within its year, which looked weird.
+# So the set of conf types includes that typo now, just in case.
 _CONF_TYPES = {'inproceedings', 'inproceedgins', 'conference'}
 _JOUR_TYPES = {'article'}
 
